@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9046" systemVersion="15B17c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Mq8-z1-Zcr">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9035"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Live Photo Demo-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="LivePhotoDemoSwift" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="C8F-8p-efJ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F6T-ny-eU2" customClass="PHLivePhotoView">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="F6T-ny-eU2" secondAttribute="trailing" constant="-20" id="5Br-UI-SSx"/>
+                            <constraint firstItem="F6T-ny-eU2" firstAttribute="leading" secondItem="C8F-8p-efJ" secondAttribute="leadingMargin" constant="-20" id="ENB-pz-lLh"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="F6T-ny-eU2" secondAttribute="bottom" id="O9S-pB-epP"/>
+                            <constraint firstItem="F6T-ny-eU2" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="wWp-PN-3Rj"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Live Photo Demo" id="tgI-2K-8OE">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="uPF-Fv-mwC">
+                            <connections>
+                                <action selector="takePhoto:" destination="BYZ-38-t0r" id="Wmj-rF-rFE"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="livePhotoView" destination="F6T-ny-eU2" id="N8r-Cz-J4X"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1057" y="205"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ZhI-Ww-OgX">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Mq8-z1-Zcr" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="QJk-AH-oRI">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="X5P-De-zeG"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="STJ-Ld-5uR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="65" y="205"/>
+        </scene>
+    </scenes>
+</document>
