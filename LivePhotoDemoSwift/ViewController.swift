@@ -28,17 +28,21 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         generator.generateCGImagesAsynchronouslyForTimes([time]) { [weak self] _, image, _, _, _ in
             if let image = image, data = UIImagePNGRepresentation(UIImage(CGImage: image)) {
                 let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-                let photoURL = urls[0].URLByAppendingPathComponent("image.jpg")
-                data.writeToURL(photoURL, atomically: true)
-
-                // PHLivePhoto
-                let livePhoto = PHLivePhoto()
-                let initWithImageURLvideoURL = NSSelectorFromString("_initWithImageURL:videoURL:");
-                if (livePhoto.respondsToSelector(initWithImageURLvideoURL) == true) {
-                    livePhoto.performSelector(initWithImageURLvideoURL, withObject:photoURL, withObject: videoURL)
-                    self?.livePhotoView.livePhoto = livePhoto
-                }
+                let imageURL = urls[0].URLByAppendingPathComponent("image.jpg")
+                data.writeToURL(imageURL, atomically: true)
+                self?.livePhotoView.livePhoto = self?.livePhotoWithImageURL(imageURL, videoURL: videoURL)
             }
+        }
+    }
+
+    func livePhotoWithImageURL(imageURL: NSURL, videoURL: NSURL) -> PHLivePhoto? {
+        let livePhoto = PHLivePhoto()
+        let initWithImageURLvideoURL = NSSelectorFromString("_initWithImageURL:videoURL:");
+        if (livePhoto.respondsToSelector(initWithImageURLvideoURL) == true) {
+            livePhoto.performSelector(initWithImageURLvideoURL, withObject:imageURL, withObject: videoURL)
+            return livePhoto
+        } else {
+            return nil
         }
     }
 
