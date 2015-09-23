@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B24154AD1BB3441B00F328E0 /* LPDLivePhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = B24154AC1BB3441B00F328E0 /* LPDLivePhoto.m */; };
 		B26BE5051BAF467300A3E194 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BE5041BAF467300A3E194 /* AppDelegate.swift */; };
 		B26BE5071BAF467300A3E194 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BE5061BAF467300A3E194 /* ViewController.swift */; };
 		B26BE50C1BAF467300A3E194 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B26BE50B1BAF467300A3E194 /* Assets.xcassets */; };
@@ -16,6 +17,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B24154AA1BB3441A00F328E0 /* LivePhotoDemoSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LivePhotoDemoSwift-Bridging-Header.h"; sourceTree = "<group>"; };
+		B24154AB1BB3441A00F328E0 /* LPDLivePhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPDLivePhoto.h; sourceTree = "<group>"; };
+		B24154AC1BB3441B00F328E0 /* LPDLivePhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPDLivePhoto.m; sourceTree = "<group>"; };
 		B26BE5011BAF467300A3E194 /* LivePhotoDemoSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LivePhotoDemoSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26BE5041BAF467300A3E194 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B26BE5061BAF467300A3E194 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; wrapsLines = 0; };
@@ -44,6 +48,7 @@
 				B26BE5021BAF467300A3E194 /* Products */,
 			);
 			sourceTree = "<group>";
+			wrapsLines = 0;
 		};
 		B26BE5021BAF467300A3E194 /* Products */ = {
 			isa = PBXGroup;
@@ -58,11 +63,14 @@
 			children = (
 				B26BE5041BAF467300A3E194 /* AppDelegate.swift */,
 				B26BE5061BAF467300A3E194 /* ViewController.swift */,
+				B24154AB1BB3441A00F328E0 /* LPDLivePhoto.h */,
+				B24154AC1BB3441B00F328E0 /* LPDLivePhoto.m */,
 				B26BE5161BAF4CEC00A3E194 /* Main.storyboard */,
 				B26BE50B1BAF467300A3E194 /* Assets.xcassets */,
 				B26BE50D1BAF467300A3E194 /* LaunchScreen.storyboard */,
 				B26BE5101BAF467300A3E194 /* Info.plist */,
 				B26BE5171BAF4CEC00A3E194 /* video.m4v */,
+				B24154AA1BB3441A00F328E0 /* LivePhotoDemoSwift-Bridging-Header.h */,
 			);
 			path = LivePhotoDemoSwift;
 			sourceTree = "<group>";
@@ -139,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B26BE5071BAF467300A3E194 /* ViewController.swift in Sources */,
+				B24154AD1BB3441B00F328E0 /* LPDLivePhoto.m in Sources */,
 				B26BE5051BAF467300A3E194 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -242,10 +251,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = LivePhotoDemoSwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.okrain.LivePhotoDemoSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "LivePhotoDemoSwift/LivePhotoDemoSwift-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -253,10 +265,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = LivePhotoDemoSwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.okrain.LivePhotoDemoSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "LivePhotoDemoSwift/LivePhotoDemoSwift-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -279,6 +293,7 @@
 				B26BE5151BAF467300A3E194 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

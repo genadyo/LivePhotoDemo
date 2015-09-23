@@ -29,16 +29,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
                 let imageURL = urls[0].URLByAppendingPathComponent("image.jpg")
                 data.writeToURL(imageURL, atomically: true)
-                self?.livePhotoView.livePhoto = self?.livePhotoWithImageURL(imageURL, videoURL: videoURL)
+                self?.livePhotoView.livePhoto = LPDLivePhoto.livePhotoWithImageURL(imageURL, videoURL: videoURL)
             }
         }
-    }
-
-    func livePhotoWithImageURL(imageURL: NSURL, videoURL: NSURL) -> PHLivePhoto {
-        let livePhoto = PHLivePhoto()
-        let initWithImageURLvideoURL = Selector("_initWithImageURL:videoURL:")
-        livePhoto.performSelector(initWithImageURLvideoURL, withObject:imageURL, withObject: videoURL)
-        return livePhoto
     }
 
     @IBAction func takePhoto(sender: UIBarButtonItem) {
