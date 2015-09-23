@@ -26,20 +26,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         generator.appliesPreferredTrackTransform = true
         let time = NSValue(CMTime: CMTimeMakeWithSeconds(CMTimeGetSeconds(asset.duration)/2, asset.duration.timescale))
         generator.generateCGImagesAsynchronouslyForTimes([time]) { [weak self] _, image, _, _, _ in
-            if let image = image {
-                let data = UIImagePNGRepresentation(UIImage(CGImage: image))
+            if let image = image, data = UIImagePNGRepresentation(UIImage(CGImage: image)) {
                 let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
                 let photoURL = urls[0].URLByAppendingPathComponent("image.jpg")
-                if let data = data {
-                    data.writeToURL(photoURL, atomically: true)
+                data.writeToURL(photoURL, atomically: true)
 
-                    // PHLivePhoto
-                    let livePhoto = PHLivePhoto()
-                    let initWithImageURLvideoURL = NSSelectorFromString("_initWithImageURL:videoURL:");
-                    if (livePhoto.respondsToSelector(initWithImageURLvideoURL) == true) {
-                        livePhoto.performSelector(initWithImageURLvideoURL, withObject:photoURL, withObject: videoURL)
-                        self?.livePhotoView.livePhoto = livePhoto
-                    }
+                // PHLivePhoto
+                let livePhoto = PHLivePhoto()
+                let initWithImageURLvideoURL = NSSelectorFromString("_initWithImageURL:videoURL:");
+                if (livePhoto.respondsToSelector(initWithImageURLvideoURL) == true) {
+                    livePhoto.performSelector(initWithImageURLvideoURL, withObject:photoURL, withObject: videoURL)
+                    self?.livePhotoView.livePhoto = livePhoto
                 }
             }
         }
