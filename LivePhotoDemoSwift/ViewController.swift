@@ -37,8 +37,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 let initWithImageURLvideoURL = NSSelectorFromString("_initWithImageURL:videoURL:");
                 if (livePhoto.respondsToSelector(initWithImageURLvideoURL) == true) {
                     livePhoto.performSelector(initWithImageURLvideoURL, withObject:photoURL, withObject: videoURL)
+                    self?.livePhotoView.livePhoto = livePhoto
                 }
-                self?.livePhotoView.livePhoto = livePhoto
             }
         }
     }
