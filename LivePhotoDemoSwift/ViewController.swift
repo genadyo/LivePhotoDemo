@@ -15,12 +15,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var livePhotoView: PHLivePhotoView! {
         didSet {
             if let url = NSBundle.mainBundle().URLForResource("video", withExtension: "m4v") {
-                loadVideo(url)
+                loadVideoWithVideoURL(url)
             }
         }
     }
 
-    func loadVideo(videoURL: NSURL) {
+    func loadVideoWithVideoURL(videoURL: NSURL) {
         livePhotoView.livePhoto = nil
         let asset = AVURLAsset(URL: videoURL)
         let generator = AVAssetImageGenerator(asset: asset)
@@ -58,7 +58,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         picker.dismissViewControllerAnimated(true) { [weak self] in
             if let url = info[UIImagePickerControllerMediaURL] as? NSURL {
-                self?.loadVideo(url)
+                self?.loadVideoWithVideoURL(url)
             }
         }
     }
