@@ -30,14 +30,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 let data = UIImagePNGRepresentation(UIImage(CGImage: image))
                 let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
                 let photoURL = urls[0].URLByAppendingPathComponent("image.jpg")
-                data?.writeToURL(photoURL, atomically: true)
+                if let data = data {
+                    data.writeToURL(photoURL, atomically: true)
 
-                // PHLivePhoto
-                let livePhoto = PHLivePhoto()
-                let initWithImageURLvideoURL = NSSelectorFromString("_initWithImageURL:videoURL:");
-                if (livePhoto.respondsToSelector(initWithImageURLvideoURL) == true) {
-                    livePhoto.performSelector(initWithImageURLvideoURL, withObject:photoURL, withObject: videoURL)
-                    self?.livePhotoView.livePhoto = livePhoto
+                    // PHLivePhoto
+                    let livePhoto = PHLivePhoto()
+                    let initWithImageURLvideoURL = NSSelectorFromString("_initWithImageURL:videoURL:");
+                    if (livePhoto.respondsToSelector(initWithImageURLvideoURL) == true) {
+                        livePhoto.performSelector(initWithImageURLvideoURL, withObject:photoURL, withObject: videoURL)
+                        self?.livePhotoView.livePhoto = livePhoto
+                    }
                 }
             }
         }
