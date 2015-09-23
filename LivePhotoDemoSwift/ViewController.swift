@@ -14,9 +14,7 @@ import MobileCoreServices
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var livePhotoView: PHLivePhotoView! {
         didSet {
-            if let url = NSBundle.mainBundle().URLForResource("video", withExtension: "m4v") {
-                loadVideoWithVideoURL(url)
-            }
+            loadVideoWithVideoURL(NSBundle.mainBundle().URLForResource("video", withExtension: "m4v")!)
         }
     }
 
@@ -36,15 +34,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
     }
 
-    func livePhotoWithImageURL(imageURL: NSURL, videoURL: NSURL) -> PHLivePhoto? {
+    func livePhotoWithImageURL(imageURL: NSURL, videoURL: NSURL) -> PHLivePhoto {
         let livePhoto = PHLivePhoto()
-        let initWithImageURLvideoURL = NSSelectorFromString("_initWithImageURL:videoURL:");
-        if (livePhoto.respondsToSelector(initWithImageURLvideoURL) == true) {
-            livePhoto.performSelector(initWithImageURLvideoURL, withObject:imageURL, withObject: videoURL)
-            return livePhoto
-        } else {
-            return nil
-        }
+        let initWithImageURLvideoURL = Selector("_initWithImageURL:videoURL:")
+        livePhoto.performSelector(initWithImageURLvideoURL, withObject:imageURL, withObject: videoURL)
+        return livePhoto
     }
 
     @IBAction func takePhoto(sender: UIBarButtonItem) {
@@ -56,9 +50,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
 
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        picker.dismissViewControllerAnimated(true) { [weak self] in
+        picker.dismissViewControllerAnimated(true) {
             if let url = info[UIImagePickerControllerMediaURL] as? NSURL {
-                self?.loadVideoWithVideoURL(url)
+                self.loadVideoWithVideoURL(url)
             }
         }
     }
