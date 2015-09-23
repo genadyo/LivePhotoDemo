@@ -21,6 +21,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
 
     func loadVideo(videoURL: NSURL) {
+        livePhotoView.livePhoto = nil
         let asset = AVURLAsset(URL: videoURL)
         let generator = AVAssetImageGenerator(asset: asset)
         generator.appliesPreferredTrackTransform = true
