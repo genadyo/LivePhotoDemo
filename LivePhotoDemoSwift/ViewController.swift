@@ -12,42 +12,33 @@ import PhotosUI
 import MobileCoreServices
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    @IBOutlet weak var livePhotoView: PHLivePhotoView!
-    var livePhoto:PHLivePhoto!
-    var videoURL = NSBundle.mainBundle().URLForResource("video", withExtension: "m4v")!
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        load()
+    @IBOutlet weak var livePhotoView: PHLivePhotoView! {
+        didSet {
+            if let url = NSBundle.mainBundle().URLForResource("video", withExtension: "m4v") {
+                loadVideo(url)
+            }
+        }
     }
 
-    func load() {
-        let asset = AVURLAsset(URL: self.videoURL)
-        // Get an image
-        let generator = AVAssetImageGenerator(asset: asset);
+    func loadVideo(videoURL: NSURL) {
+        let asset = AVURLAsset(URL: videoURL)
+        let generator = AVAssetImageGenerator(asset: asset)
         generator.appliesPreferredTrackTransform = true
-        generator.generateCGImagesAsynchronouslyForTimes([NSValue(CMTime: CMTimeMakeWithSeconds(CMTimeGetSeconds(asset.duration)/2, asset.duration.timescale))]) { _, image, _, _, _ in
+        let time = NSValue(CMTime: CMTimeMakeWithSeconds(CMTimeGetSeconds(asset.duration)/2, asset.duration.timescale))
+        generator.generateCGImagesAsynchronouslyForTimes([time]) { [weak self] _, image, _, _, _ in
             if let image = image {
-                // Save the image
-                let imageData = UIImagePNGRepresentation(UIImage(CGImage: image))
+                let data = UIImagePNGRepresentation(UIImage(CGImage: image))
                 let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
                 let photoURL = urls[0].URLByAppendingPathComponent("image.jpg")
-                do {
-                    try NSFileManager.defaultManager().removeItemAtURL(photoURL)
-                } catch {
-                }
-                imageData?.writeToURL(photoURL, atomically: true)
+                data?.writeToURL(photoURL, atomically: true)
 
-                // Call private API to create the live photo
-                self.livePhoto = PHLivePhoto()
+                // PHLivePhoto
+                let livePhoto = PHLivePhoto()
                 let initWithImageURLvideoURL = NSSelectorFromString("_initWithImageURL:videoURL:");
-                if (self.livePhoto.respondsToSelector(initWithImageURLvideoURL) == true) {
-                    self.livePhoto.performSelector(initWithImageURLvideoURL, withObject:photoURL, withObject: self.videoURL)
+                if (livePhoto.respondsToSelector(initWithImageURLvideoURL) == true) {
+                    livePhoto.performSelector(initWithImageURLvideoURL, withObject:photoURL, withObject: videoURL)
                 }
-
-                // Set the live photo
-                self.livePhotoView.livePhoto = self.livePhoto
+                self?.livePhotoView.livePhoto = livePhoto
             }
         }
     }
@@ -61,9 +52,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
 
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        videoURL = info[UIImagePickerControllerMediaURL] as! NSURL
-        picker.dismissViewControllerAnimated(true) {
-            self.load()
+        picker.dismissViewControllerAnimated(true) { [weak self] in
+            if let url = info[UIImagePickerControllerMediaURL] as? NSURL {
+                self?.loadVideo(url)
+            }
         }
     }
 }
