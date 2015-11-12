@@ -43,7 +43,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 let output = FilePaths.VidToLive.livePath
                 let assetIdentifier = NSUUID().UUIDString
                 let _ = try? NSFileManager.defaultManager().createDirectoryAtPath(output, withIntermediateDirectories: true, attributes: nil)
-                
                 do {
                     try NSFileManager.defaultManager().removeItemAtPath(output.stringByAppendingString("/IMG.JPG"))
                     try NSFileManager.defaultManager().removeItemAtPath(output.stringByAppendingString("/IMG.MOV"))
