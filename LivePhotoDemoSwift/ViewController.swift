@@ -56,7 +56,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 QuickTimeMov(path: mov!).write(output.stringByAppendingString("/IMG.MOV"),
                     assetIdentifier: assetIdentifier)
                 
-                
                 self?.livePhotoView.livePhoto = LPDLivePhoto.livePhotoWithImageURL(NSURL(fileURLWithPath: FilePaths.VidToLive.livePath.stringByAppendingString("/IMG.JPG")), videoURL: NSURL(fileURLWithPath: FilePaths.VidToLive.livePath.stringByAppendingString("/IMG.MOV")))
             
                 self?.exportLivePhoto()
