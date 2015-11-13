@@ -54,10 +54,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                     assetIdentifier: assetIdentifier)
                 QuickTimeMov(path: mov!).write(output.stringByAppendingString("/IMG.MOV"),
                     assetIdentifier: assetIdentifier)
-                
-                self?.livePhotoView.livePhoto = LPDLivePhoto.livePhotoWithImageURL(NSURL(fileURLWithPath: FilePaths.VidToLive.livePath.stringByAppendingString("/IMG.JPG")), videoURL: NSURL(fileURLWithPath: FilePaths.VidToLive.livePath.stringByAppendingString("/IMG.MOV")))
             
-                self?.exportLivePhoto()
+                //self?.livePhotoView.livePhoto = LPDLivePhoto.livePhotoWithImageURL(NSURL(fileURLWithPath: FilePaths.VidToLive.livePath.stringByAppendingString("/IMG.JPG")), videoURL: NSURL(fileURLWithPath: FilePaths.VidToLive.livePath.stringByAppendingString("/IMG.MOV")))
+                //self?.exportLivePhoto()
+                PHLivePhoto.requestLivePhotoWithResourceFileURLs([ NSURL(fileURLWithPath: FilePaths.VidToLive.livePath.stringByAppendingString("/IMG.MOV")), NSURL(fileURLWithPath: FilePaths.VidToLive.livePath.stringByAppendingString("/IMG.JPG"))],
+                    placeholderImage: nil,
+                    targetSize: self!.view.bounds.size,
+                    contentMode: PHImageContentMode.Default,
+                    resultHandler: { (livePhoto, info) -> Void in
+                        self?.livePhotoView.livePhoto = livePhoto
+                        self?.exportLivePhoto()
+                })
             }
         }
     }
