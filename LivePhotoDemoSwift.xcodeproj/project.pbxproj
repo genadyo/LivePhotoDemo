@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		283372D41BF538BC00D343E4 /* JPEG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283372D21BF538BC00D343E4 /* JPEG.swift */; };
 		283372D51BF538BC00D343E4 /* QuickTimeMov.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283372D31BF538BC00D343E4 /* QuickTimeMov.swift */; };
-		B24154AD1BB3441B00F328E0 /* LPDLivePhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = B24154AC1BB3441B00F328E0 /* LPDLivePhoto.m */; };
 		B26BE5051BAF467300A3E194 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BE5041BAF467300A3E194 /* AppDelegate.swift */; };
 		B26BE5071BAF467300A3E194 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BE5061BAF467300A3E194 /* ViewController.swift */; };
 		B26BE50C1BAF467300A3E194 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B26BE50B1BAF467300A3E194 /* Assets.xcassets */; };
@@ -19,11 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		283372D21BF538BC00D343E4 /* JPEG.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JPEG.swift; sourceTree = "<group>"; };
-		283372D31BF538BC00D343E4 /* QuickTimeMov.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickTimeMov.swift; sourceTree = "<group>"; };
-		B24154AA1BB3441A00F328E0 /* LivePhotoDemoSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LivePhotoDemoSwift-Bridging-Header.h"; sourceTree = "<group>"; };
-		B24154AB1BB3441A00F328E0 /* LPDLivePhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPDLivePhoto.h; sourceTree = "<group>"; };
-		B24154AC1BB3441B00F328E0 /* LPDLivePhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPDLivePhoto.m; sourceTree = "<group>"; };
+		283372D21BF538BC00D343E4 /* JPEG.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JPEG.swift; path = ../JPEG.swift; sourceTree = "<group>"; };
+		283372D31BF538BC00D343E4 /* QuickTimeMov.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QuickTimeMov.swift; path = ../QuickTimeMov.swift; sourceTree = "<group>"; };
 		B26BE5011BAF467300A3E194 /* LivePhotoDemoSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LivePhotoDemoSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26BE5041BAF467300A3E194 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B26BE5061BAF467300A3E194 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; wrapsLines = 0; };
@@ -48,8 +44,6 @@
 		B26BE4F81BAF467300A3E194 = {
 			isa = PBXGroup;
 			children = (
-				283372D21BF538BC00D343E4 /* JPEG.swift */,
-				283372D31BF538BC00D343E4 /* QuickTimeMov.swift */,
 				B26BE5031BAF467300A3E194 /* LivePhotoDemoSwift */,
 				B26BE5021BAF467300A3E194 /* Products */,
 			);
@@ -69,14 +63,13 @@
 			children = (
 				B26BE5041BAF467300A3E194 /* AppDelegate.swift */,
 				B26BE5061BAF467300A3E194 /* ViewController.swift */,
-				B24154AB1BB3441A00F328E0 /* LPDLivePhoto.h */,
-				B24154AC1BB3441B00F328E0 /* LPDLivePhoto.m */,
-				B26BE5161BAF4CEC00A3E194 /* Main.storyboard */,
-				B26BE50B1BAF467300A3E194 /* Assets.xcassets */,
+				283372D21BF538BC00D343E4 /* JPEG.swift */,
+				283372D31BF538BC00D343E4 /* QuickTimeMov.swift */,
 				B26BE50D1BAF467300A3E194 /* LaunchScreen.storyboard */,
+				B26BE5161BAF4CEC00A3E194 /* Main.storyboard */,
 				B26BE5101BAF467300A3E194 /* Info.plist */,
 				B26BE5171BAF4CEC00A3E194 /* video.m4v */,
-				B24154AA1BB3441A00F328E0 /* LivePhotoDemoSwift-Bridging-Header.h */,
+				B26BE50B1BAF467300A3E194 /* Assets.xcassets */,
 			);
 			path = LivePhotoDemoSwift;
 			sourceTree = "<group>";
@@ -154,7 +147,6 @@
 			files = (
 				B26BE5071BAF467300A3E194 /* ViewController.swift in Sources */,
 				283372D51BF538BC00D343E4 /* QuickTimeMov.swift in Sources */,
-				B24154AD1BB3441B00F328E0 /* LPDLivePhoto.m in Sources */,
 				B26BE5051BAF467300A3E194 /* AppDelegate.swift in Sources */,
 				283372D41BF538BC00D343E4 /* JPEG.swift in Sources */,
 			);
@@ -264,7 +256,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.okrain.LivePhotoDemoSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "LivePhotoDemoSwift/LivePhotoDemoSwift-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -278,7 +269,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.okrain.LivePhotoDemoSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "LivePhotoDemoSwift/LivePhotoDemoSwift-Bridging-Header.h";
 			};
 			name = Release;
 		};

@@ -8,6 +8,7 @@
 
 import Foundation
 import MobileCoreServices
+import ImageIO
 
 class JPEG {
     private let kFigAppleMakerNote_AssetIdentifier = "17"
