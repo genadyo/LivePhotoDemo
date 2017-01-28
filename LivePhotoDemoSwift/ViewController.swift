@@ -13,54 +13,54 @@ import MobileCoreServices
 
 
 struct FilePaths {
-    static let documentsPath : AnyObject = NSSearchPathForDirectoriesInDomains(.CachesDirectory,.UserDomainMask,true)[0]
+    static let documentsPath : AnyObject = NSSearchPathForDirectoriesInDomains(.cachesDirectory,.userDomainMask,true)[0] as AnyObject
     struct VidToLive {
-        static var livePath = FilePaths.documentsPath.stringByAppendingString("/")
+        static var livePath = FilePaths.documentsPath.appending("/")
     }
 }
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var livePhotoView: PHLivePhotoView! {
         didSet {
-            loadVideoWithVideoURL(NSBundle.mainBundle().URLForResource("video", withExtension: "m4v")!)
+            loadVideoWithVideoURL(Bundle.main.url(forResource: "video", withExtension: "m4v")!)
         }
     }
     
-    func loadVideoWithVideoURL(videoURL: NSURL) {
+    func loadVideoWithVideoURL(_ videoURL: URL) {
         livePhotoView.livePhoto = nil
-        let asset = AVURLAsset(URL: videoURL)
+        let asset = AVURLAsset(url: videoURL)
         let generator = AVAssetImageGenerator(asset: asset)
         generator.appliesPreferredTrackTransform = true
-        let time = NSValue(CMTime: CMTimeMakeWithSeconds(CMTimeGetSeconds(asset.duration)/2, asset.duration.timescale))
-        generator.generateCGImagesAsynchronouslyForTimes([time]) { [weak self] _, image, _, _, _ in
-            if let image = image, data = UIImagePNGRepresentation(UIImage(CGImage: image)) {
-                let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-                let imageURL = urls[0].URLByAppendingPathComponent("image.jpg")
-                data.writeToURL(imageURL, atomically: true)
+        let time = NSValue(time: CMTimeMakeWithSeconds(CMTimeGetSeconds(asset.duration)/2, asset.duration.timescale))
+        generator.generateCGImagesAsynchronously(forTimes: [time]) { [weak self] _, image, _, _, _ in
+            if let image = image, let data = UIImagePNGRepresentation(UIImage(cgImage: image)) {
+                let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                let imageURL = urls[0].appendingPathComponent("image.jpg")
+                try? data.write(to: imageURL, options: [.atomic])
                 
                 let image = imageURL.path
                 let mov = videoURL.path
                 let output = FilePaths.VidToLive.livePath
-                let assetIdentifier = NSUUID().UUIDString
-                let _ = try? NSFileManager.defaultManager().createDirectoryAtPath(output, withIntermediateDirectories: true, attributes: nil)
+                let assetIdentifier = UUID().uuidString
+                let _ = try? FileManager.default.createDirectory(atPath: output, withIntermediateDirectories: true, attributes: nil)
                 do {
-                    try NSFileManager.defaultManager().removeItemAtPath(output.stringByAppendingString("/IMG.JPG"))
-                    try NSFileManager.defaultManager().removeItemAtPath(output.stringByAppendingString("/IMG.MOV"))
+                    try FileManager.default.removeItem(atPath: output + "/IMG.JPG")
+                    try FileManager.default.removeItem(atPath: output + "/IMG.MOV")
                     
                 } catch {
                     
                 }
-                JPEG(path: image!).write(output.stringByAppendingString("/IMG.JPG"),
+                JPEG(path: image).write(output + "/IMG.JPG",
                     assetIdentifier: assetIdentifier)
-                QuickTimeMov(path: mov!).write(output.stringByAppendingString("/IMG.MOV"),
+                QuickTimeMov(path: mov).write(output + "/IMG.MOV",
                     assetIdentifier: assetIdentifier)
             
                 //self?.livePhotoView.livePhoto = LPDLivePhoto.livePhotoWithImageURL(NSURL(fileURLWithPath: FilePaths.VidToLive.livePath.stringByAppendingString("/IMG.JPG")), videoURL: NSURL(fileURLWithPath: FilePaths.VidToLive.livePath.stringByAppendingString("/IMG.MOV")))
                 //self?.exportLivePhoto()
-                PHLivePhoto.requestLivePhotoWithResourceFileURLs([ NSURL(fileURLWithPath: FilePaths.VidToLive.livePath.stringByAppendingString("/IMG.MOV")), NSURL(fileURLWithPath: FilePaths.VidToLive.livePath.stringByAppendingString("/IMG.JPG"))],
+                PHLivePhoto.request(withResourceFileURLs: [ URL(fileURLWithPath: FilePaths.VidToLive.livePath + "/IMG.MOV"), URL(fileURLWithPath: FilePaths.VidToLive.livePath + "/IMG.JPG")],
                     placeholderImage: nil,
                     targetSize: self!.view.bounds.size,
-                    contentMode: PHImageContentMode.Default,
+                    contentMode: PHImageContentMode.aspectFit,
                     resultHandler: { (livePhoto, info) -> Void in
                         self?.livePhotoView.livePhoto = livePhoto
                         self?.exportLivePhoto()
@@ -69,30 +69,30 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
     }
     
-    @IBAction func takePhoto(sender: UIBarButtonItem) {
+    @IBAction func takePhoto(_ sender: UIBarButtonItem) {
         let picker = UIImagePickerController()
         picker.delegate = self
-        picker.sourceType = .Camera
+        picker.sourceType = .camera
         picker.mediaTypes = [kUTTypeMovie as String]
-        presentViewController(picker, animated: true, completion: nil)
+        present(picker, animated: true, completion: nil)
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        picker.dismissViewControllerAnimated(true) {
-            if let url = info[UIImagePickerControllerMediaURL] as? NSURL {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        picker.dismiss(animated: true) {
+            if let url = info[UIImagePickerControllerMediaURL] as? URL {
                 self.loadVideoWithVideoURL(url)
             }
         }
     }
     
     func exportLivePhoto () {
-        PHPhotoLibrary.sharedPhotoLibrary().performChanges({ () -> Void in
-            let creationRequest = PHAssetCreationRequest.creationRequestForAsset()
+        PHPhotoLibrary.shared().performChanges({ () -> Void in
+            let creationRequest = PHAssetCreationRequest.forAsset()
             let options = PHAssetResourceCreationOptions()
             
             
-            creationRequest.addResourceWithType(PHAssetResourceType.PairedVideo, fileURL: NSURL(fileURLWithPath: FilePaths.VidToLive.livePath.stringByAppendingString("/IMG.MOV")), options: options)
-            creationRequest.addResourceWithType(PHAssetResourceType.Photo, fileURL: NSURL(fileURLWithPath: FilePaths.VidToLive.livePath.stringByAppendingString("/IMG.JPG")), options: options)
+            creationRequest.addResource(with: PHAssetResourceType.pairedVideo, fileURL: URL(fileURLWithPath: FilePaths.VidToLive.livePath + "/IMG.MOV"), options: options)
+            creationRequest.addResource(with: PHAssetResourceType.photo, fileURL: URL(fileURLWithPath: FilePaths.VidToLive.livePath + "/IMG.JPG"), options: options)
             
             }, completionHandler: { (success, error) -> Void in
                 print(success)
