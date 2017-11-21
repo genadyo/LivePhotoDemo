@@ -29,7 +29,7 @@ class QuickTimeMov {
     func readAssetIdentifier() -> String? {
         for item in metadata() {
             if item.key as? String == kKeyContentIdentifier &&
-                item.keySpace == kKeySpaceQuickTimeMetadata {
+                item.keySpace!.rawValue == kKeySpaceQuickTimeMetadata {
                 return item.value as? String
             }
         }
@@ -37,7 +37,7 @@ class QuickTimeMov {
     }
 
     func readStillImageTime() -> NSNumber? {
-        if let track = track(AVMediaTypeMetadata) {
+        if let track = track(AVMediaType.video) {
             let (reader, output) = try! self.reader(track, settings: nil)
             reader.startReading()
 
@@ -47,7 +47,7 @@ class QuickTimeMov {
                     let group = AVTimedMetadataGroup(sampleBuffer: buffer)
                     for item in group?.items ?? [] {
                         if item.key as? String == kKeyStillImageTime &&
-                            item.keySpace == kKeySpaceQuickTimeMetadata {
+                            item.keySpace!.rawValue == kKeySpaceQuickTimeMetadata {
                                 return item.numberValue
                         }
                     }
@@ -66,8 +66,8 @@ class QuickTimeMov {
             // --------------------------------------------------
             // reader for source video
             // --------------------------------------------------
-            guard let track = self.track(AVMediaTypeVideo) else {
-                print("not found video track")
+            guard let track = self.track(AVMediaType.video) else {
+                DTLog("not found video track")
                 return
             }
             let (reader, output) = try self.reader(track,
@@ -76,11 +76,11 @@ class QuickTimeMov {
             // --------------------------------------------------
             // writer for mov
             // --------------------------------------------------
-            let writer = try AVAssetWriter(outputURL: URL(fileURLWithPath: dest), fileType: AVFileTypeQuickTimeMovie)
+            let writer = try AVAssetWriter(outputURL: URL(fileURLWithPath: dest), fileType: .mov)
             writer.metadata = [metadataFor(assetIdentifier)]
             
             // video track
-            let input = AVAssetWriterInput(mediaType: AVMediaTypeVideo,
+            let input = AVAssetWriterInput(mediaType: .video,
                                            outputSettings: videoSettings(track.naturalSize))
             input.expectsMediaDataInRealTime = true
             input.transform = track.preferredTransform
@@ -91,16 +91,16 @@ class QuickTimeMov {
             let aAudioAsset : AVAsset = AVAsset(url: url)
             
             if aAudioAsset.tracks.count > 1 {
-                print("Has Audio")
+                DTLog("Has Audio")
                 //setup audio writer
-                audioWriterInput = AVAssetWriterInput(mediaType: AVMediaTypeAudio, outputSettings: nil)
+                audioWriterInput = AVAssetWriterInput(mediaType: .audio, outputSettings: nil)
                 
                 audioWriterInput?.expectsMediaDataInRealTime = false
                 if writer.canAdd(audioWriterInput!){
                     writer.add(audioWriterInput!)
                 }
                 //setup audio reader
-                let audioTrack:AVAssetTrack = aAudioAsset.tracks(withMediaType: AVMediaTypeAudio).first!
+                let audioTrack:AVAssetTrack = aAudioAsset.tracks(withMediaType: .audio).first!
                 audioReaderOutput = AVAssetReaderTrackOutput(track: audioTrack, outputSettings: nil)
                 
                 do{
@@ -112,7 +112,7 @@ class QuickTimeMov {
                 if (audioReader?.canAdd(audioReaderOutput!))! {
                     audioReader?.add(audioReaderOutput!)
                 } else {
-                    print("cant add audio reader")
+                    DTLog("cant add audio reader")
                 }
             }
             
@@ -137,7 +137,7 @@ class QuickTimeMov {
                     if reader.status == .reading {
                         if let buffer = output.copyNextSampleBuffer() {
                             if !input.append(buffer) {
-                                print("cannot write: \(writer.error)")
+                                DTLog("cannot write: \((describing: writer.error?.localizedDescription))")
                                 reader.cancelReading()
                             }
                         }
@@ -149,7 +149,7 @@ class QuickTimeMov {
                             let media_queue = DispatchQueue(label: "assetAudioWriterQueue", attributes: [])
                             audioWriterInput?.requestMediaDataWhenReady(on: media_queue) {
                                 while (audioWriterInput?.isReadyForMoreMediaData)! {
-                                    //print("Second loop")
+                                    //DTLog("Second loop")
                                     let sampleBuffer2:CMSampleBuffer? = audioReaderOutput?.copyNextSampleBuffer()
                                     if audioReader?.status == .reading && sampleBuffer2 != nil {
                                         if !(audioWriterInput?.append(sampleBuffer2!))! {
@@ -157,12 +157,12 @@ class QuickTimeMov {
                                         }
                                     }else {
                                         audioWriterInput?.markAsFinished()
-                                        print("Audio writer finish")
+                                        DTLog("Audio writer finish")
                                         writer.finishWriting() {
                                             if let e = writer.error {
-                                                print("cannot write: \(e)")
+                                                DTLog("cannot write: \(e)")
                                             } else {
-                                                print("finish writing.")
+                                                DTLog("finish writing.")
                                             }
                                         }
                                     }
@@ -170,12 +170,12 @@ class QuickTimeMov {
                             }
                         }
                         else {
-                            print("Video Reader not completed")
+                            DTLog("Video Reader not completed")
                             writer.finishWriting() {
                                 if let e = writer.error {
-                                    print("cannot write: \(e)")
+                                    DTLog("cannot write: \(e)")
                                 } else {
-                                    print("finish writing.")
+                                    DTLog("finish writing.")
                                 }
                             }
                         }
@@ -186,18 +186,18 @@ class QuickTimeMov {
                 RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.5))
             }
             if let e = writer.error {
-                print("cannot write: \(e)")
+                DTLog("cannot write: \(e)")
             }
         } catch {
-            print("error")
+            DTLog("error")
         }
     }
 
     fileprivate func metadata() -> [AVMetadataItem] {
-        return asset.metadata(forFormat: AVMetadataFormatQuickTimeMetadata)
+        return asset.metadata(forFormat: .quickTimeMetadata)
     }
 
-    fileprivate func track(_ mediaType : String) -> AVAssetTrack? {
+    fileprivate func track(_ mediaType : AVMediaType) -> AVAssetTrack? {
         return asset.tracks(withMediaType: mediaType).first
     }
 
@@ -217,7 +217,7 @@ class QuickTimeMov {
 
         var desc : CMFormatDescription? = nil
         CMMetadataFormatDescriptionCreateWithMetadataSpecifications(kCFAllocatorDefault, kCMMetadataFormatType_Boxed, [spec] as CFArray, &desc)
-        let input = AVAssetWriterInput(mediaType: AVMediaTypeMetadata,
+        let input = AVAssetWriterInput(mediaType: .metadata,
             outputSettings: nil, sourceFormatHint: desc)
         return AVAssetWriterInputMetadataAdaptor(assetWriterInput: input)
     }
@@ -233,7 +233,7 @@ class QuickTimeMov {
     fileprivate func metadataFor(_ assetIdentifier: String) -> AVMetadataItem {
         let item = AVMutableMetadataItem()
         item.key = kKeyContentIdentifier as (NSCopying & NSObjectProtocol)?
-        item.keySpace = kKeySpaceQuickTimeMetadata
+        item.keySpace = AVMetadataKeySpace(rawValue: kKeySpaceQuickTimeMetadata)
         item.value = assetIdentifier as (NSCopying & NSObjectProtocol)?
         item.dataType = "com.apple.metadata.datatype.UTF-8"
         return item
@@ -242,7 +242,7 @@ class QuickTimeMov {
     fileprivate func metadataForStillImageTime() -> AVMetadataItem {
         let item = AVMutableMetadataItem()
         item.key = kKeyStillImageTime as (NSCopying & NSObjectProtocol)?
-        item.keySpace = kKeySpaceQuickTimeMetadata
+        item.keySpace = AVMetadataKeySpace(rawValue: kKeySpaceQuickTimeMetadata)
         item.value = 0 as (NSCopying & NSObjectProtocol)?
         item.dataType = "com.apple.metadata.datatype.int8"
         return item
