@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		283372D41BF538BC00D343E4 /* JPEG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283372D21BF538BC00D343E4 /* JPEG.swift */; };
 		283372D51BF538BC00D343E4 /* QuickTimeMov.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283372D31BF538BC00D343E4 /* QuickTimeMov.swift */; };
+		75C6D54F1FC3C7FC008D8570 /* DTOtherMacro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C6D54E1FC3C7FC008D8570 /* DTOtherMacro.swift */; };
 		B26BE5051BAF467300A3E194 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BE5041BAF467300A3E194 /* AppDelegate.swift */; };
 		B26BE5071BAF467300A3E194 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BE5061BAF467300A3E194 /* ViewController.swift */; };
 		B26BE50C1BAF467300A3E194 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B26BE50B1BAF467300A3E194 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		283372D21BF538BC00D343E4 /* JPEG.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JPEG.swift; path = ../JPEG.swift; sourceTree = "<group>"; };
 		283372D31BF538BC00D343E4 /* QuickTimeMov.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QuickTimeMov.swift; path = ../QuickTimeMov.swift; sourceTree = "<group>"; };
+		75C6D54E1FC3C7FC008D8570 /* DTOtherMacro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTOtherMacro.swift; sourceTree = "<group>"; };
 		B26BE5011BAF467300A3E194 /* LivePhotoDemoSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LivePhotoDemoSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26BE5041BAF467300A3E194 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B26BE5061BAF467300A3E194 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; wrapsLines = 0; };
@@ -41,6 +43,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		75673D561FC2D30F00D9B150 /* Macro */ = {
+			isa = PBXGroup;
+			children = (
+				75C6D54E1FC3C7FC008D8570 /* DTOtherMacro.swift */,
+			);
+			path = Macro;
+			sourceTree = "<group>";
+		};
 		B26BE4F81BAF467300A3E194 = {
 			isa = PBXGroup;
 			children = (
@@ -61,6 +71,7 @@
 		B26BE5031BAF467300A3E194 /* LivePhotoDemoSwift */ = {
 			isa = PBXGroup;
 			children = (
+				75673D561FC2D30F00D9B150 /* Macro */,
 				B26BE5041BAF467300A3E194 /* AppDelegate.swift */,
 				B26BE5061BAF467300A3E194 /* ViewController.swift */,
 				283372D21BF538BC00D343E4 /* JPEG.swift */,
@@ -100,12 +111,13 @@
 		B26BE4F91BAF467300A3E194 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "Genady Okrain";
 				TargetAttributes = {
 					B26BE5001BAF467300A3E194 = {
 						CreatedOnToolsVersion = 7.1;
-						LastSwiftMigration = 0820;
+						DevelopmentTeam = H8J36KWCJF;
+						LastSwiftMigration = 0910;
 					};
 				};
 			};
@@ -146,6 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75C6D54F1FC3C7FC008D8570 /* DTOtherMacro.swift in Sources */,
 				B26BE5071BAF467300A3E194 /* ViewController.swift in Sources */,
 				283372D51BF538BC00D343E4 /* QuickTimeMov.swift in Sources */,
 				B26BE5051BAF467300A3E194 /* AppDelegate.swift in Sources */,
@@ -175,13 +188,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -219,13 +240,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -244,6 +273,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -253,12 +283,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = H8J36KWCJF;
 				INFOPLIST_FILE = LivePhotoDemoSwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.okrain.LivePhotoDemoSwift;
+				PRODUCT_BUNDLE_IDENTIFIER = com.okrain.LivePhotoDemoSwift2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -267,11 +299,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = H8J36KWCJF;
 				INFOPLIST_FILE = LivePhotoDemoSwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.okrain.LivePhotoDemoSwift;
+				PRODUCT_BUNDLE_IDENTIFIER = com.okrain.LivePhotoDemoSwift2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

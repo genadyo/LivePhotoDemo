@@ -57,14 +57,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             
                 //self?.livePhotoView.livePhoto = LPDLivePhoto.livePhotoWithImageURL(NSURL(fileURLWithPath: FilePaths.VidToLive.livePath.stringByAppendingString("/IMG.JPG")), videoURL: NSURL(fileURLWithPath: FilePaths.VidToLive.livePath.stringByAppendingString("/IMG.MOV")))
                 //self?.exportLivePhoto()
-                PHLivePhoto.request(withResourceFileURLs: [ URL(fileURLWithPath: FilePaths.VidToLive.livePath + "/IMG.MOV"), URL(fileURLWithPath: FilePaths.VidToLive.livePath + "/IMG.JPG")],
-                    placeholderImage: nil,
-                    targetSize: self!.view.bounds.size,
-                    contentMode: PHImageContentMode.aspectFit,
-                    resultHandler: { (livePhoto, info) -> Void in
-                        self?.livePhotoView.livePhoto = livePhoto
-                        self?.exportLivePhoto()
-                })
+                _ = DispatchQueue.main.sync {
+                    PHLivePhoto.request(withResourceFileURLs: [ URL(fileURLWithPath: FilePaths.VidToLive.livePath + "/IMG.MOV"), URL(fileURLWithPath: FilePaths.VidToLive.livePath + "/IMG.JPG")],
+                                        placeholderImage: nil,
+                                        targetSize: self!.view.bounds.size,
+                                        contentMode: PHImageContentMode.aspectFit,
+                                        resultHandler: { (livePhoto, info) -> Void in
+                                            self?.livePhotoView.livePhoto = livePhoto
+                                            self?.exportLivePhoto()
+                    })
+                }
             }
         }
     }
@@ -95,15 +97,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             creationRequest.addResource(with: PHAssetResourceType.photo, fileURL: URL(fileURLWithPath: FilePaths.VidToLive.livePath + "/IMG.JPG"), options: options)
             
             }, completionHandler: { (success, error) -> Void in
-                print(success)
-                print(error)
-                
+                if !success {
+                    DTLog((error?.localizedDescription)!)
+                }
         })
-        
-        
-        
     }
-    
-    
 }
 
